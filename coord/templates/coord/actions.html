@@ -1,0 +1,147 @@
+{% extends "yuzzaz/besi.html" %}
+{% load static %}
+
+{% block title %}Quick Actions{% endblock %}
+{% block location %}Quick Actions{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+{% endblock %}
+
+
+{% block content %}
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        fontFamily: {
+          sans: ['Karla', 'sans-serif'],
+        },
+        colors: {
+          dark: '#111111',
+          light: '#f8f8f8',
+        },
+        animation: {
+          'float': 'float 6s ease-in-out infinite',
+          'fade-in': 'fadeIn 0.5s ease-out',
+        },
+        keyframes: {
+          float: {
+            '0%, 100%': { transform: 'translateY(0)' },
+            '50%': { transform: 'translateY(-5px)' },
+          },
+          fadeIn: {
+            '0%': { opacity: '0' },
+            '100%': { opacity: '1' },
+          }
+        }
+      }
+    }
+  }
+</script>
+
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+  <!-- Dashboard Header -->
+  <div class="text-center mb-12">
+    <h1 class="text-3xl font-bold mb-2">Staff Dashboard</h1>
+    <p class="text-gray-600">Management Center for North & Beyond</p>
+  </div>
+
+  <!-- Quick Actions Grid -->
+  <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
+    <!-- Events Management -->
+    <a href="{% url 'all_events' %}" class="group bg-white border-2 border-black rounded-xl p-6 text-center shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all duration-200">
+      <div class="w-16 h-16 bg-maroon text-white rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-gray-800 transition-colors">
+        <i class="fas fa-calendar-day text-2xl"></i>
+      </div>
+      <h3 class="font-bold text-lg mb-1">Events</h3>
+      <p class="text-sm text-gray-600">Manage all events</p>
+    </a>
+
+
+    <!-- Gallery Management -->
+    <a href="{% url 'gallery' %}" class="group bg-white border-2 border-black rounded-xl p-6 text-center shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all duration-200">
+      <div class="w-16 h-16 bg-maroon text-white rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-gray-800 transition-colors">
+        <i class="fas fa-images text-2xl"></i>
+      </div>
+      <h3 class="font-bold text-lg mb-1">Gallery</h3>
+      <p class="text-sm text-gray-600">Manage all media</p>
+    </a>
+
+    <!-- Universities -->
+    <a href="{% url 'all_universities' %}" class="group bg-white border-2 border-black rounded-xl p-6 text-center shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all duration-200">
+      <div class="w-16 h-16 bg-maroon text-white rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-gray-800 transition-colors">
+        <i class="fas fa-university text-2xl"></i>
+      </div>
+      <h3 class="font-bold text-lg mb-1">Universities</h3>
+      <p class="text-sm text-gray-600">Manage partner institutions</p>
+    </a>
+
+    <!-- Team Management -->
+    <a href="{% url 'all_team' %}" class="group bg-white border-2 border-black rounded-xl p-6 text-center shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all duration-200">
+      <div class="w-16 h-16 bg-maroon text-white rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-gray-800 transition-colors">
+        <i class="fas fa-users text-2xl"></i>
+      </div>
+      <h3 class="font-bold text-lg mb-1">Team</h3>
+      <p class="text-sm text-gray-600">Manage team members</p>
+    </a>
+
+    <!-- Subscriptions -->
+    <a href="{% url 'subscribers' %}" class="group bg-white border-2 border-black rounded-xl p-6 text-center shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all duration-200">
+      <div class="w-16 h-16 bg-maroon text-white rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-gray-800 transition-colors">
+        <i class="fas fa-envelope-open-text text-2xl"></i>
+      </div>
+      <h3 class="font-bold text-lg mb-1">Subscribers</h3>
+      <p class="text-sm text-gray-600">View mailing list</p>
+    </a>
+
+    <!-- Contact Messages -->
+    <a href="{% url 'message_list' %}" class="group bg-white border-2 border-black rounded-xl p-6 text-center shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all duration-200">
+      <div class="w-16 h-16 bg-maroon text-white rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-gray-800 transition-colors">
+        <i class="fas fa-inbox text-2xl"></i>
+      </div>
+      <h3 class="font-bold text-lg mb-1">Messages</h3>
+      <p class="text-sm text-gray-600">View contact inquiries</p>
+    </a>
+        <!-- Add New Event -->
+    <a href="{% url 'email_template_list' %}" class="group bg-white border-2 border-black rounded-xl p-6 text-center shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all duration-200">
+      <div class="w-16 h-16 bg-maroon text-white rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-gray-800 transition-colors">
+        <i class="fas fa-envelope text-2xl"></i>
+      </div>
+      <h3 class="font-bold text-lg mb-1">Email Templates</h3>
+      <p class="text-sm text-gray-600">Manage subscription email templates</p>
+    </a>
+
+    <!-- Add New Event -->
+    <a href="{% url 'profile' %}" class="group bg-white border-2 border-black rounded-xl p-6 text-center shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all duration-200">
+      <div class="w-16 h-16 bg-maroon text-white rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-gray-800 transition-colors">
+        <i class="fas fa-user-tie text-2xl"></i>
+      </div>
+      <h3 class="font-bold text-lg mb-1">Profile</h3>
+      <p class="text-sm text-gray-600">Preview your profile</p>
+    </a>
+
+    <!-- Dashboard Refresh -->
+    <a href="{% url 'staff_dashboard' %}" class="group bg-white border-2 border-black rounded-xl p-6 text-center shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all duration-200">
+      <div class="w-16 h-16 bg-maroon text-white rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-gray-800 transition-colors">
+        <i class="fas fa-sync-alt text-2xl"></i>
+      </div>
+      <h3 class="font-bold text-lg mb-1">Refresh</h3>
+      <p class="text-sm text-gray-600">Reload dashboard</p>
+    </a>
+  </div>
+</div>
+
+<style>
+  /* Custom shadow effect similar to your original design */
+  .shadow-custom {
+    box-shadow: 5px 5px 0px #000;
+  }
+  
+  /* Hover effect for the cards */
+  .group:hover .group-hover\:bg-gray-800 {
+    background-color: #1f2937;
+  }
+</style>
+{% endblock %}

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>{{ subject }}</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #111;
+      color: #eee;
+      padding: 20px;
+      margin: 0;
+    }
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background: #1c1c1c;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+    }
+    .header {
+      background: #800000; /* Maroon */
+      color: #fff;
+      padding: 20px;
+      font-size: 22px;
+      font-weight: bold;
+      text-align: center;
+      border-radius: 8px 8px 0 0;
+    }
+    .content {
+      padding: 24px 18px;
+      font-size: 16px;
+      line-height: 1.7;
+      color: #ddd;
+    }
+    .content p {
+      margin-bottom: 16px;
+    }
+    .attachment {
+      margin-top: 20px;
+      font-size: 15px;
+    }
+    .cta-button {
+      display: inline-block;
+      margin-top: 25px;
+      background-color: #800000;
+      color: #fff;
+      padding: 12px 24px;
+      text-decoration: none;
+      font-weight: bold;
+      border-radius: 6px;
+      transition: background 0.3s ease;
+    }
+    .cta-button:hover {
+      background-color: #a00000;
+    }
+    .footer {
+      margin-top: 30px;
+      text-align: center;
+      font-size: 13px;
+      color: #999;
+      border-top: 1px solid #333;
+      padding-top: 15px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      📬 {{ subject }}
+    </div>
+
+    <div class="content">
+      <p>{{ content }}</p>
+
+      {% if attachment %}
+        <div class="attachment">
+          <strong>📎 Attachment:</strong>
+          <a href="{{ attachment.url }}" style="color: #ffcccc;" download>See Below</a>
+        </div>
+      {% endif %}
+
+      <a href="{% url 'landing' %}" class="cta-button">Stay Updated</a>
+    </div>
+
+    <div class="footer">
+      © {{ current_year }} North & Beyond. All rights reserved.
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Waitlist Confirmation - North & Beyond</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #0f0f0f;
+      font-family: 'DM Sans', sans-serif;
+      color: #ffffff;
+    }
+
+    .email-container {
+      max-width: 600px;
+      margin: 2rem auto;
+      background-color: #1c1c1c;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+    }
+
+    .email-header {
+      background-color: #800000;
+      padding: 24px;
+      font-size: 26px;
+      font-weight: 700;
+      text-align: center;
+      color: #fff;
+    }
+
+    .email-body {
+      padding: 30px 25px;
+      font-size: 16px;
+      line-height: 1.6;
+      text-align: center;
+      background-color: #1c1c1c;
+    }
+
+    .email-body h2 {
+      font-size: 24px;
+      color: #ffffff;
+      margin-bottom: 16px;
+    }
+
+    .email-body p {
+      color: #d0d0d0;
+      margin: 12px 0;
+    }
+
+    .btn-primary {
+      display: inline-block;
+      margin-top: 24px;
+      padding: 12px 24px;
+      background-color: #800000;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 5px;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn-primary:hover {
+      background-color: #a00000;
+    }
+
+    .email-footer {
+      background-color: #121212;
+      text-align: center;
+      padding: 16px;
+      font-size: 14px;
+      color: #777;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="email-container">
+    <div class="email-header">
+      Thanks for subscribing! 🔥
+    </div>
+
+    <div class="email-body">
+      <h2>Welcome, {{ email }} 👋</h2>
+      <p>You've successfully joined the subscription list for <strong>North & Beyond</strong>.</p>
+      <p>We'll keep you in the loop with early access, updates, and exclusive perks.</p>
+      <a href="https://northandbeyond.com" class="btn-primary" target="_blank">Explore More</a>
+    </div>
+
+    <div class="email-footer">
+      © {{ current_year }} North & Beyond. All rights reserved.
+    </div>
+  </div>
+</body>
+</html>

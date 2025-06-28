@@ -1,0 +1,84 @@
+{% extends "yuzzaz/besi.html" %}
+{% load static %}
+{% block content %}
+
+<div class="py-2 bg-gradient-to-br from-black via-dark to-gray-900 text-white relative overflow-hidden">
+
+  <!-- Universities Section -->
+  <section id="universities" class="my-10">
+    <div class="container mx-auto px-4 lg:px-8 relative z-10">
+            <!-- Back Link -->
+      <div class="text-left my-8">
+        <a href="{% url 'landing' %}"
+          class="inline-block bg-maroon text-white px-6 py-3 rounded-full font-semibold hover:bg-red-900 transition">
+          <i class="fas fa-home mr-2"></i>
+          Go back to homepage
+        </a>
+      </div>
+
+      <!-- Add Gallery Button for Staff -->
+      {% if user.is_authenticated and user.is_staff %}
+      <div class="text-right my-4">
+        <a href="{% url 'university_add' %}"
+          class="inline-block bg-maroon text-white px-6 py-3 rounded-full font-semibold hover:bg-red-900 transition">
+          <i class="fas fa-plus mr-2"></i>
+          Add University
+        </a>
+      </div>
+      {% endif %}
+
+
+      <h2
+        class="section-title text-transparent bg-clip-text bg-gradient-to-r from-white to-maroon text-4xl md:text-5xl font-extrabold text-center mb-16 uppercase">
+        Partner Universities
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {% for uni in universities %}
+        <div
+          class="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 hover:shadow-xl transition duration-500 relative">
+          {% if user.is_authenticated and user.is_staff %}
+          <div class="absolute top-4 right-4 flex gap-2">
+            <a href="{% url 'university_edit' uni.pk %}"
+              class="bg-maroon h-8 w-8 rounded-full flex items-center justify-center text-white hover:bg-yellow-500 transition">
+              <i class="fas fa-pencil-alt text-sm"></i>
+            </a>
+            <a href="{% url 'university_delete' uni.pk %}" onclick="return confirm('Delete this university?');"
+              class="bg-maroon h-8 w-8 rounded-full flex items-center justify-center text-white hover:bg-red-500 transition">
+              <i class="fas fa-trash-alt text-sm"></i>
+            </a>
+          </div>
+          {% endif %}
+
+          <div class="flex items-center mb-4">
+            <img src="https://logo.clearbit.com/{{ uni.website|cut:'https://'|cut:'www.' }}" alt="{{ uni.name }}"
+              class="w-12 h-12 mr-4 rounded-xl" onerror="this.src='{% static 'images/uni.jpeg' %}'">
+            <div>
+              <h3 class="text-xl font-bold">{{ uni.name }}</h3>
+              <p class="text-gray-400 text-sm">{{ uni.location }}</p>
+            </div>
+          </div>
+
+          <p class="text-gray-300 mb-4 text-sm">{{ uni.description }}</p>
+          <div class="flex justify-between text-sm">
+            <span class="text-red-400 font-semibold">Acceptance: {{ uni.acceptance_rate }}</span>
+            <span class="text-gray-400">Deadline: {{ uni.deadline|date:"M d" }}</span>
+          </div>
+          <a href="{{ uni.website }}" target="_blank"
+            class="block mt-4 text-red-600 hover:text-white transition-colors text-sm font-semibold text-right">
+            Visit Website <i class="fas fa-external-link-alt ml-1"></i>
+          </a>
+        </div>
+        {% empty %}
+        <div class="col-span-full flex flex-col items-center justify-center text-center py-12">
+          <div class="flex items-center justify-center w-24 h-24 bg-maroon rounded-full mb-4 shadow-lg">
+            <i class="fas fa-university text-white text-4xl"></i>
+          </div>
+          <p class="text-gray-300 text-lg">No partner universities added yet.</p>
+        </div>
+        {% endfor %}
+      </div>
+
+    </div>
+  </section>
+{% endblock %}

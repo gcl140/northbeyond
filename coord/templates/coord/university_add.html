@@ -1,0 +1,119 @@
+{% extends "yuzzaz/besi.html" %}
+{% load static %}
+{% block content %}
+<section class="py-16 bg-gradient-to-br from-black via-gray-900 to-gray-800">
+  <div class="container mx-auto px-4 lg:px-8">
+    <div class="max-w-2xl mx-auto">
+      <div class="bg-gray-800/70 backdrop-blur-sm border border-gray-700/50 rounded-2xl shadow-2xl overflow-hidden">
+        <!-- Header -->
+        <div class="bg-maroon/90 px-8 py-6">
+          <h1 class="text-3xl font-bold text-white flex items-center">
+            <i class="fas fa-university mr-3"></i>
+            {{ title }} University
+          </h1>
+        </div>
+
+        <!-- Form Body -->
+        <div class="p-8">
+          <form method="POST" class="space-y-6">
+            {% csrf_token %}
+
+            <!-- Name -->
+            <div class="space-y-2">
+              <label for="id_name" class="block text-sm font-medium text-gray-300">
+                University Name <span class="text-red-500">*</span>
+              </label>
+              <input type="text" id="id_name" name="name"
+                     value="{{ form.name.value|default:'' }}"
+                     class="w-full bg-gray-700 border border-gray-600 text-white placeholder-gray-400 rounded-lg px-4 py-3 focus:ring-2 focus:ring-maroon focus:border-transparent"
+                     placeholder="e.g. Harvard University">
+              {% if form.name.errors %}
+                <p class="text-sm text-red-500">{{ form.name.errors }}</p>
+              {% endif %}
+            </div>
+
+            <!-- Description -->
+            <div class="space-y-2">
+              <label for="id_description" class="block text-sm font-medium text-gray-300">
+                Description <span class="text-red-500">*</span>
+              </label>
+              <textarea id="id_description" name="description" rows="4"
+                        class="w-full bg-gray-700 border border-gray-600 text-white placeholder-gray-400 rounded-lg px-4 py-3 focus:ring-2 focus:ring-maroon focus:border-transparent"
+                        placeholder="e.g. Ivy League institution with world-class programs.">{{ form.description.value|default:'' }}</textarea>
+              {% if form.description.errors %}
+                <p class="text-sm text-red-500">{{ form.description.errors }}</p>
+              {% endif %}
+            </div>
+
+            <!-- Acceptance Rate -->
+            <div class="space-y-2">
+              <label for="id_acceptance_rate" class="block text-sm font-medium text-gray-300">
+                Acceptance Rate (%) <span class="text-red-500">*</span>
+              </label>
+              <input type="text" id="id_acceptance_rate" name="acceptance_rate"
+                     value="{{ form.acceptance_rate.value|default:'' }}"
+                     class="w-full bg-gray-700 border border-gray-600 text-white placeholder-gray-400 rounded-lg px-4 py-3 focus:ring-2 focus:ring-maroon focus:border-transparent"
+                     placeholder="e.g. 25%">
+              {% if form.acceptance_rate.errors %}
+              {% for error in form.acceptance_rate.errors %}
+                <p class="text-sm text-red-500">{{ error }}</p>
+              {% endfor %}
+              {% endif %}
+            </div>
+
+            <!-- Location -->
+            <div class="space-y-2">
+              <label for="id_location" class="block text-sm font-medium text-gray-300">
+                Location <span class="text-red-500">*</span>
+              </label>
+              <input type="text" id="id_location" name="location"
+                     value="{{ form.location.value|default:'' }}"
+                     class="w-full bg-gray-700 border border-gray-600 text-white placeholder-gray-400 rounded-lg px-4 py-3 focus:ring-2 focus:ring-maroon focus:border-transparent"
+                     placeholder="e.g. Cambridge, USA">
+              {% if form.location.errors %}
+                <p class="text-sm text-red-500">{{ form.location.errors }}</p>
+              {% endif %}
+            </div>
+
+            <!-- Deadline -->
+            <div class="space-y-2">
+              <label for="id_deadline" class="block text-sm font-medium text-gray-300">
+                Application Deadline <span class="text-red-500">*</span>
+              </label>
+              <input type="date" id="id_deadline" name="deadline"
+                     value="{{ form.deadline.value|date:'Y-m-d' }}"
+                     class="w-full bg-gray-700 border border-gray-600 text-white rounded-lg px-4 py-3 focus:ring-2 focus:ring-maroon focus:border-transparent">
+              {% if form.deadline.errors %}
+                <p class="text-sm text-red-500">{{ form.deadline.errors }}</p>
+              {% endif %}
+            </div>
+
+            <!-- Website -->
+            <div class="space-y-2">
+              <label for="id_website" class="block text-sm font-medium text-gray-300">
+                University Website <span class="text-red-500">*</span>
+              </label>
+              <input type="url" id="id_website" name="website"
+                     value="{{ form.website.value|default:'' }}"
+                     class="w-full bg-gray-700 border border-gray-600 text-white placeholder-gray-400 rounded-lg px-4 py-3 focus:ring-2 focus:ring-maroon focus:border-transparent"
+                     placeholder="https://university.edu">
+              {% if form.website.errors %}
+                <p class="text-sm text-red-500">{{ form.website.errors }}</p>
+              {% endif %}
+            </div>
+
+            <!-- Submit -->
+            <div class="pt-4">
+              <button type="submit"
+                      class="w-full bg-gradient-to-r from-maroon to-red-900 text-white px-6 py-3 rounded-full font-semibold hover:from-maroon/90 hover:to-red-900/90 transition-all shadow-lg hover:shadow-maroon/30 flex items-center justify-center">
+                <i class="fas fa-paper-plane mr-2"></i>
+                Save University
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,68 @@
+{% extends "yuzzaz/besi.html" %}
+{% load static %}
+{% block content %}
+<section class="py-16 bg-gradient-to-br from-black via-gray-900 to-gray-800">
+  <div class="container mx-auto px-4 lg:px-8">
+    <div class="max-w-4xl mx-auto">
+      <!-- Back button -->
+      <div class="mb-8">
+        <a href="{% url 'all_events' %}"
+          class="inline-block bg-maroon text-white px-6 py-3 rounded-full font-semibold hover:bg-red-900 transition">
+          <i class="fas fa-arrow-left mr-2"></i>
+          Back to Events
+        </a>
+      </div>
+
+      <!-- Event Card -->
+      <div class="bg-gray-800/70 backdrop-blur-sm border border-gray-700/50 rounded-2xl overflow-hidden shadow-2xl">
+        <!-- Event Image -->
+        {% if event.thumbnail %}
+        <div class="relative h-64 md:h-80 w-full overflow-hidden">
+          <img src="{% if event.thumbnail %} {{ event.thumbnail.url }}{%else%}{% static 'images/event.jpeg' %}{% endif %}"
+          alt="{{ event.name }}"
+            class="w-full h-full object-cover transform hover:scale-105 transition-transform duration-500">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
+          <div class="absolute top-0 right-0 p-6">
+            <span class="inline-block bg-maroon/90 text-white px-3 py-1 rounded-full text-sm font-medium">
+              {{ event.due_date|date:"F d, Y" }}
+            </span>
+          </div>
+        </div>
+        {% else %}
+        <div
+          class="relative h-64 md:h-80 w-full bg-gradient-to-br from-gray-900 to-maroon/30 flex items-center justify-center">
+          <i class="fas fa-calendar-day text-6xl text-gray-600/50"></i>
+        </div>
+        {% endif %}
+
+        <!-- Event Content -->
+        <div class="p-8">
+          <h1 class="text-3xl md:text-4xl font-bold text-white mb-4">{{ event.name }}</h1>
+
+          <div class="prose prose-invert max-w-none text-gray-300 mb-6">
+            {{ event.description|linebreaks }}
+          </div>
+
+          <!-- Additional Info -->
+          <div class="flex flex-wrap justify-between gap-4 mt-8 border-t border-gray-700/50 pt-6">
+            <div class="flex items-center text-gray-400">
+              <i class="fas fa-map-marker-alt mr-2"></i>
+              <span>{{ event.location }}</span>
+            </div>
+            
+            <div class="flex items-center">
+              <i class="fas fa-calendar-alt mr-2 text-gray-400"></i>
+              <span class="font-semibold text-white">{{ event.due_date|date:"F d, Y" }}</span>
+            </div>
+
+            <div class="flex items-center">
+              <i class="fas fa-hourglass-half mr-2 text-gray-500"></i>
+              <span class="italic text-green-300">{{ event_status }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

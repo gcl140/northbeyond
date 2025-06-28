@@ -1,0 +1,51 @@
+{% extends "yuzzaz/besi.html" %}
+{% block content %}
+<main class="p-6 bg-white min-h-screen">
+    <div class="max-w-6xl mx-auto">
+        <h1 class="text-2xl font-bold mb-6">Contact Messages ({{ mesejes.count }})</h1>
+        <div class="bg-white shadow rounded overflow-x-auto">
+            <table class="min-w-full table-auto divide-y divide-gray-200">
+                <thead class="bg-black text-white text-left text-sm uppercase">
+                    <tr>
+                        <th class="px-6 py-3">Status</th>
+                        <th class="px-6 py-3">Name</th>
+                        <th class="px-6 py-3">Email</th>
+                        <th class="px-6 py-3">Message</th>
+                        <th class="px-6 py-3">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200 text-gray-800">
+                    {% for m in mesejes %}
+                    <tr>
+                        <td class="px-6 py-4">
+                            {% if m.replied_by %}
+                            <i class="fas fa-check-circle text-green-500 mr-1"></i>
+                            {{ m.replied_by.first_name|slice:":1"|upper }}{{ m.replied_by.last_name|slice:":1"|upper }}
+
+                            {% else %}
+
+                            <a href="{% url 'reply_to_message' m.pk %}">
+                                <i class="fas fa-reply text-gray-500"></i>
+                            </a>
+                            {% endif %}
+                        </td>
+                        <td class="px-6 py-4">{{ m.full_name }}</td>
+                        <td class="px-6 py-4">{{ m.email }}</td>
+                        <td class="px-6 py-4">{{ m.message|truncatechars:50 }}</td>
+                        <td class="px-6 py-4">
+                            <a href="{% url 'message_detail' m.pk %}" class="text-maroon hover:underline font-medium">
+                                View
+                            </a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4" class="text-center text-gray-500 py-6">No messages found.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+{% endblock %}
