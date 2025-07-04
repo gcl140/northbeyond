@@ -6,9 +6,11 @@ from django.template.loader import render_to_string
 from datetime import date
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
-from .forms import ContactForm, SubscriptionForm, UpcomingEventForm, GalleryItemForm, UniversityForm, TeamMemberForm, EmailTemplateForm, MessageReplyForm
-from .models import Message, SubscriptionUser, UpcomingEvent, GalleryItem, University, TeamMember, SubscriptionEmailTemplate
+from .forms import ContactForm, SubscriptionForm, UpcomingEventForm, GalleryItemForm, UniversityForm, TeamMemberForm, EmailTemplateForm, MessageReplyForm, ProgramForm, JobApplicationForm
+from .models import Message, SubscriptionUser, UpcomingEvent, GalleryItem, University, TeamMember, SubscriptionEmailTemplate, Program, JobApplication
 from django.contrib.admin.views.decorators import staff_member_required
+from django.contrib.auth.decorators import login_required
+
 
 def contact_view(request):
     if request.method == 'POST':
@@ -392,3 +394,87 @@ def reply_to_message(request, pk):
 
     return render(request, 'coord/message_reply_form.html', {'form': form, 'message': msg})
 
+@staff_member_required
+def program_list(request):
+    programs = Program.objects.all().order_by('name')
+    return render(request, 'coord/programs_list.html', {'programs': programs})
+
+@staff_member_required
+def program_create(request):
+    if request.method == "POST":
+        form = ProgramForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Program created successfully.")
+            return redirect('program_list')
+    else:
+        form = ProgramForm()
+    return render(request, 'coord/programs_add.html', {'form': form, 'title': 'Add Program'})
+
+@staff_member_required
+def program_edit(request, pk):
+    program = get_object_or_404(Program, pk=pk)
+    if request.method == "POST":
+        form = ProgramForm(request.POST, instance=program)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Program updated successfully.")
+            return redirect('program_list')
+    else:
+        form = ProgramForm(instance=program)
+    return render(request, 'coord/programs_add.html', {'form': form, 'title': 'Edit Program'})
+
+@staff_member_required
+def program_delete(request, pk):
+    program = get_object_or_404(Program, pk=pk)
+    program.delete()
+    messages.success(request, "Program deleted successfully.")
+    return redirect('program_list')
+
+@staff_member_required
+def program_detail(request, pk):
+    program = get_object_or_404(Program, pk=pk)
+    return render(request, 'coord/program_detail.html', {'program': program})
+
+
+@login_required
+def apply_for_job(request):
+    # Check if the user has already submitted
+    if JobApplication.objects.filter(user=request.user, submitted=True).exists():
+        messages.info(request, "You have already submitted an application.")
+        return redirect("job_apply_success")
+
+    # Check if there's a saved draft (submitted=False)
+    existing_app = JobApplication.objects.filter(user=request.user, submitted=False).first()
+
+    if request.method == "POST":
+        form = JobApplicationForm(request.POST, request.FILES, instance=existing_app)
+        if form.is_valid():
+            application = form.save(commit=False)
+            application.user = request.user
+            application.submitted = True  # mark as submitted
+            application.save()
+            messages.success(request, "Your application has been submitted successfully.")
+            return redirect("job_apply_success")
+    else:
+        form = JobApplicationForm(instance=existing_app)
+
+    return render(request, "coord/job_application_form.html", {
+        "form": form,
+        "title": "Apply as Intern"
+    })
+
+def job_apply_success(request):
+    return render(request, "coord/job_success.html")
+
+@staff_member_required
+def my_applications(request):
+    apps = JobApplication.objects.filter(user=request.user, submitted=True).order_by('-applied_on')
+    return render(request, "coord/job_apps.html", {"applications": apps})
+
+@staff_member_required
+def delete_application(request, pk):
+    app = get_object_or_404(JobApplication, pk=pk, user=request.user)
+    app.delete()
+    messages.success(request, "Application deleted successfully.")
+    return redirect("my_applications")

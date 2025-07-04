@@ -17,7 +17,7 @@ from datetime import timedelta, datetime
 from yuzzaz.forms import UserRegistrationForm, CustomUserForm
 from django.contrib.auth.decorators import login_required
 from yuzzaz.tokens import account_activation_token
-from coord.models import GalleryItem, TeamMember, UpcomingEvent, University
+from coord.models import GalleryItem, TeamMember, UpcomingEvent, University, Program
 from random import randint
 import random
 
@@ -35,6 +35,7 @@ def landing(request):
         'gallery_items': random.sample(all_gallery_items, min(3, len(all_gallery_items))),
         'universities': random.sample(all_universities, min(3, len(all_universities))),
         'team_members': TeamMember.objects.all().order_by('rank'),
+        'programs': Program.objects.all().order_by()
 
     }
     return render(request, 'yuzzaz/landing.html', context)

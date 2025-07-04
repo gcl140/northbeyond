@@ -1,0 +1,160 @@
+{% extends "yuzzaz/besi.html" %}
+{% load static %}
+{% block content %}
+<section class="py-16 bg-gradient-to-br from-black via-gray-900 to-gray-800 text-white">
+  <div class="container mx-auto px-4 lg:px-8">
+    <h1 class="text-3xl font-bold mb-8 text-center">Job Applications Review</h1>
+    
+    {% if applications %}
+    <div class="bg-gray-800/70 backdrop-blur-sm border border-gray-700/50 rounded-xl shadow-xl overflow-x-auto">
+      <table class="min-w-full divide-y divide-gray-700">
+        <thead class="bg-maroon/90">
+          <tr>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Applicant</th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Contact</th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Application</th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Date</th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Status</th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Actions</th>
+          </tr>
+        </thead>
+        <tbody class="bg-gray-800/50 divide-y divide-gray-700">
+          {% for app in applications %}
+          <tr class="hover:bg-gray-700/50 transition-colors">
+            <!-- Applicant Column -->
+            <td class="px-6 py-4 whitespace-nowrap">
+              <div class="flex items-center">
+                <div class="flex-shrink-0 h-10 w-10 bg-gray-700 rounded-full flex items-center justify-center">
+                  <i class="fas fa-user text-gray-400"></i>
+                </div>
+                <div class="ml-4">
+                  <div class="text-sm font-medium">{{ app.full_name }}</div>
+                  <div class="text-xs text-gray-400">User: {{ app.user.username }}</div>
+                </div>
+              </div>
+            </td>
+            
+            <!-- Contact Column -->
+            <td class="px-6 py-4 whitespace-nowrap">
+              <div class="text-sm">
+                <a href="mailto:{{ app.email }}" class="text-blue-400 hover:text-blue-300 flex items-center mb-1">
+                  <i class="fas fa-envelope mr-2"></i> {{ app.email }}
+                </a>
+                <a href="tel:{{ app.phone }}" class="text-blue-400 hover:text-blue-300 flex items-center">
+                  <i class="fas fa-phone mr-2"></i> {{ app.phone }}
+                </a>
+              </div>
+            </td>
+            
+            <!-- Application Column -->
+            <td class="px-6 py-4">
+              <div class="text-sm">
+                <div class="mb-2">
+                  <a href="{{ app.resume.url }}" target="_blank" class="text-maroon-300 hover:text-maroon-200 flex items-center">
+                    <i class="fas fa-file-pdf mr-2"></i> View Resume
+                  </a>
+                </div>
+                {% if app.cover_letter %}
+                <button onclick="toggleCoverLetter('cover-letter-{{ app.id }}')" class="text-gray-300 hover:text-white text-xs flex items-center">
+                  <i class="fas fa-eye mr-1"></i> Toggle Cover Letter
+                </button>
+                {% endif %}
+              </div>
+            </td>
+            
+            <!-- Date Column -->
+            <td class="px-6 py-4 whitespace-nowrap">
+              <div class="text-sm text-gray-300">
+                <i class="fas fa-calendar-alt mr-2"></i>
+                {{ app.applied_on|date:"M d, Y" }}
+              </div>
+              <div class="text-xs text-gray-500">
+                {{ app.applied_on|date:"h:i A" }}
+              </div>
+            </td>
+            
+            <!-- Status Column -->
+            <td class="px-6 py-4 whitespace-nowrap">
+              <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                {% if app.submitted %}bg-green-600/50 text-green-200
+                {% else %}bg-gray-600 text-gray-300{% endif %}">
+                {% if app.submitted %}Submitted{% else %}Draft{% endif %}
+              </span>
+            </td>
+            
+            <!-- Actions Column -->
+            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+              <div class="flex space-x-2">
+                
+            <a href="{% url 'delete_application' app.pk %}"
+                class="bg-maroon h-8 w-8 rounded-full flex items-center justify-center text-white hover:bg-red-500 transition-colors"
+                onclick="return confirm('Are you sure you want to delete this event?');">
+                <i class="fas fa-trash-alt text-sm"></i>
+              </a>
+
+              </div>
+            </td>
+          </tr>
+          
+          <!-- Cover Letter Row (hidden by default) -->
+          {% if app.cover_letter %}
+          <tr id="cover-letter-{{ app.id }}" class="hidden bg-gray-900/30">
+            <td colspan="6" class="px-6 py-4">
+              <div class="text-sm text-gray-300">
+                <h4 class="font-medium text-gray-200 mb-2">Cover Letter:</h4>
+                <div class="bg-gray-800/50 p-4 rounded-lg whitespace-pre-line">{{ app.cover_letter }}</div>
+              </div>
+            </td>
+          </tr>
+          {% endif %}
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    
+    <!-- Pagination would go here -->
+    
+    {% else %}
+    <div class="text-center text-gray-400 mt-12">
+      <i class="fas fa-folder-open text-4xl mb-4"></i>
+      <p>No applications found.</p>
+    </div>
+    {% endif %}
+  </div>
+</section>
+
+<script>
+  function toggleCoverLetter(id) {
+    const element = document.getElementById(id);
+    element.classList.toggle('hidden');
+  }
+  
+  function previewApplication(appId) {
+    // Implement modal preview or redirect to detail view
+    window.location.href = `/applications/${appId}/preview/`;
+  }
+  
+//   function confirmDelete(appId) {
+//     if (confirm('Are you sure you want to delete this application?')) {
+//       window.location.href = `actions/applications/${appId}/delete/`;
+//     }
+//   }
+</script>
+
+<style>
+  table {
+    border-collapse: separate;
+    border-spacing: 0;
+  }
+  
+  th {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  
+  tr:last-child td {
+    border-bottom: none;
+  }
+</style>
+{% endblock %}

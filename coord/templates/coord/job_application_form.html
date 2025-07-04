@@ -1,0 +1,93 @@
+{% extends "yuzzaz/besi.html" %}
+{% load static %}
+{% block content %}
+<section class="py-16 bg-gradient-to-br from-black via-gray-900 to-gray-800">
+  <div class="container mx-auto px-4 lg:px-8">
+    <div class="max-w-2xl mx-auto">
+      <!-- Form Card -->
+      <div class="bg-gray-800/70 backdrop-blur-sm border border-gray-700/50 rounded-2xl shadow-2xl overflow-hidden">
+        <!-- Header -->
+        <div class="bg-maroon/90 px-8 py-6">
+          <h1 class="text-3xl font-bold text-white flex items-center">
+            <i class="fas fa-briefcase mr-3"></i>
+            {{ title }}
+          </h1>
+        </div>
+
+        <!-- Form Body -->
+        <div class="p-8">
+          <form method="POST" enctype="multipart/form-data" class="space-y-6">
+            {% csrf_token %}
+
+            <!-- Full Name -->
+            <div class="space-y-2">
+              <label for="id_full_name" class="block text-sm font-medium text-gray-300">Full Name <span class="text-red-500">*</span></label>
+              <input type="text" id="id_full_name" name="full_name" required value="{{ form.full_name.value|default:'' }}"
+                class="w-full bg-gray-700 border border-gray-600 text-white placeholder-gray-400 rounded-lg px-4 py-3 focus:ring-2 focus:ring-maroon focus:border-transparent"
+                placeholder="Your full name">
+              {% if form.full_name.errors %}
+              <p class="text-sm text-red-500">{{ form.full_name.errors }}</p>
+              {% endif %}
+            </div>
+
+            <!-- Email -->
+            <div class="space-y-2">
+              <label for="id_email" class="block text-sm font-medium text-gray-300">Email <span class="text-red-500">*</span></label>
+              <input type="email" id="id_email" name="email" required value="{{ form.email.value|default:'' }}"
+                class="w-full bg-gray-700 border border-gray-600 text-white placeholder-gray-400 rounded-lg px-4 py-3 focus:ring-2 focus:ring-maroon focus:border-transparent"
+                placeholder="your.email@example.com">
+              {% if form.email.errors %}
+              <p class="text-sm text-red-500">{{ form.email.errors }}</p>
+              {% endif %}
+            </div>
+
+            <!-- Phone -->
+            <div class="space-y-2">
+              <label for="id_phone" class="block text-sm font-medium text-gray-300">Phone Number <span class="text-red-500">*</span></label>
+              <input type="tel" id="id_phone" name="phone" required value="{{ form.phone.value|default:'' }}"
+                class="w-full bg-gray-700 border border-gray-600 text-white placeholder-gray-400 rounded-lg px-4 py-3 focus:ring-2 focus:ring-maroon focus:border-transparent"
+                placeholder="+1 (123) 456-7890">
+              {% if form.phone.errors %}
+              <p class="text-sm text-red-500">{{ form.phone.errors }}</p>
+              {% endif %}
+            </div>
+
+            <!-- Resume -->
+            <div class="space-y-2">
+              <label for="id_resume" class="block text-sm font-medium text-gray-300">Resume (PDF/DOC) <span class="text-red-500">*</span></label>
+              <input type="file" id="id_resume" name="resume" required
+                class="w-full bg-gray-700 border border-gray-600 text-white rounded-lg px-4 py-3 focus:ring-2 focus:ring-maroon focus:border-transparent file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-maroon/50 file:text-white hover:file:bg-maroon/70">
+              {% if form.resume.errors %}
+              {% for error in form.resume.errors %}
+              <p class="text-sm text-red-500">{{ error }}</p>
+              {% endfor %}
+              {% endif %}
+              <p class="text-xs text-gray-400 mt-1">Max file size: 5MB (PDF or Word documents only)</p>
+            </div>
+
+            <!-- Cover Letter -->
+            <div class="space-y-2">
+              <label for="id_cover_letter" class="block text-sm font-medium text-gray-300">Cover Letter</label>
+              <textarea id="id_cover_letter" name="cover_letter" rows="5"
+                class="w-full bg-gray-700 border border-gray-600 text-white placeholder-gray-400 rounded-lg px-4 py-3 focus:ring-2 focus:ring-maroon focus:border-transparent"
+                placeholder="Tell us why you'd be a great fit...">{{ form.cover_letter.value|default:'' }}</textarea>
+              {% if form.cover_letter.errors %}
+              <p class="text-sm text-red-500">{{ form.cover_letter.errors }}</p>
+              {% endif %}
+            </div>
+
+            <!-- Submit Button -->
+            <div class="pt-4">
+              <button type="submit"
+                class="w-full bg-gradient-to-r from-maroon to-red-900 text-white px-6 py-3 rounded-full font-semibold hover:from-maroon/90 hover:to-red-900/90 transition-all shadow-lg hover:shadow-maroon/30 flex items-center justify-center">
+                <i class="fas fa-paper-plane mr-2"></i>
+                Submit Application
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

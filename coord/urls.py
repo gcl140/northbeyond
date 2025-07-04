@@ -28,7 +28,7 @@ urlpatterns = [
     path('team/edit/<int:pk>/', views.team_edit, name='team_edit'),
     path('team/delete/<int:pk>/', views.team_delete, name='team_delete'),
 
-    path('staff/dashboard/', views.staff_dashboard, name='staff_dashboard'),
+    path('staff-dashboard/', views.staff_dashboard, name='staff_dashboard'),
     path('subscribers/', views.subscribers, name='subscribers'),
     path('subscribers/<int:pk>/delete/', views.subscriber_delete, name='subscriber_delete'),
     path('send-email/', views.send_bulk_email, name='send_bulk_email'),
@@ -42,5 +42,17 @@ urlpatterns = [
     path('messages/', views.message_list, name='message_list'),
     path('messages/<int:pk>/', views.message_detail, name='message_detail'),
     path('messages/<int:pk>/reply/', views.reply_to_message, name='reply_to_message'),
+
+    path('programs/', views.program_list, name='program_list'),
+    path('programs/add/', views.program_create, name='program_create'),
+    path('programs/<int:pk>/edit/', views.program_edit, name='program_edit'),
+    path('program/<int:pk>/', views.program_detail, name='program_detail'),
+    path('programs/<int:pk>/delete/', views.program_delete, name='program_delete'),
+
+
+    path("apply-intern/", views.apply_for_job, name="job_apply"),
+    path("apply-intern/success/", views.job_apply_success, name="job_apply_success"),
+    path("applications/", views.my_applications, name="my_applications"),
+    path("applications/<int:pk>/delete/", views.delete_application, name="delete_application"),
 
 ]

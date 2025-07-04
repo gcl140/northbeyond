@@ -1,0 +1,50 @@
+{% extends "yuzzaz/besi.html" %}
+{% load static %}
+{% block content %}
+<section class="py-16 bg-gradient-to-br from-black via-gray-900 to-gray-800">
+  <div class="container mx-auto px-4 lg:px-8">
+    <div class="max-w-4xl mx-auto">
+
+      <!-- Back button -->
+      <div class="mb-8">
+        <a href="{% url 'program_list' %}"
+          class="inline-block bg-maroon text-white px-6 py-3 rounded-full font-semibold hover:bg-red-900 transition">
+          <i class="fas fa-arrow-left mr-2"></i>
+          Back to Programs
+        </a>
+      </div>
+
+      <!-- Program Card -->
+      <div class="bg-gray-800/70 backdrop-blur-sm border border-gray-700/50 rounded-2xl overflow-hidden shadow-2xl">
+
+        <!-- Optional Program Image Section -->
+
+        <!-- Program Content -->
+        <div class="p-8">
+          <h1 class="text-3xl md:text-4xl font-bold text-white mb-4">{{ program.name }}</h1>
+
+          <div class="prose prose-invert max-w-none text-gray-300 mb-6">
+            {{ program.description|linebreaks }}
+          </div>
+
+          <!-- Additional Info -->
+          <div class="flex flex-wrap justify-between gap-4 mt-8 border-t border-gray-700/50 pt-6">
+
+            <div class="flex items-center text-gray-400">
+              <i class="fas fa-map-marker-alt mr-2"></i>
+              <span class="text-white font-medium">{{ program.branch }}</span>
+            </div>
+
+            <div class="flex items-center text-gray-400">
+              <i class="fas fa-clock mr-2"></i>
+              <span class="text-white font-medium">Duration: {{ program.duration }}</span>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

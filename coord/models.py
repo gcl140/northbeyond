@@ -16,8 +16,21 @@ class UpcomingEvent(models.Model):
 class Program(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField()
-    branch = models.CharField(max_length=255)
+    branch = models.CharField(max_length=255, choices=[
+        ('Golden Tulip, DSM', 'Golden Tulip, DSM'),
+        ('Sea Shells, DSM', 'Sea Shells, DSM'),
+        ('Arusha, DSM', 'Arusha, DSM')
+    ])
     duration = models.CharField(max_length=100)
+    # type = models.CharField(max_length=50, choices=[
+    #     ('Short Course', 'Short Course'),
+    #     ('Diploma', 'Diploma'),
+    #     ('Certificate', 'Certificate'),
+    #     ('Degree', 'Degree'),
+    #     ('Masters', 'Masters'),
+    #     ('PhD', 'PhD')
+    # ], default='Short Course')
+    created_at = models.DateTimeField(auto_now_add=True)
 
 # 3. Services Offered
 class Service(models.Model):
@@ -69,10 +82,12 @@ class SubscriptionEmailTemplate(models.Model):
 # 7. Apply for a Job
 class JobApplication(models.Model):
     full_name = models.CharField(max_length=255)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     email = models.EmailField()
     phone = models.CharField(max_length=20)
     resume = models.FileField(upload_to='resumes/')
     cover_letter = models.TextField(blank=True)
+    submitted = models.BooleanField(default=False)  # Add this
     applied_on = models.DateTimeField(auto_now_add=True)
 
 # 8. Apply With Us
