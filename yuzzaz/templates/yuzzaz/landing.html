@@ -49,11 +49,10 @@
                     </div>
                 </div>
                 <div class="relative flex flex-wrap gap-4">
-                    <button
-                        class="bg-maroon hover:bg-white hover:text-maroon border-2 border-white hover:border-maroon text-white px-8 py-3 rounded-full font-bold transition transform hover:scale-105 glow-effect">
+                    <button onclick="location.href='{% url 'company_profile' %}'" class="bg-maroon hover:bg-white hover:text-maroon border-2 border-white hover:border-maroon text-white px-8 py-3 rounded-full font-bold transition transform hover:scale-105 glow-effect">
                         Read More
                     </button>
-                    <button
+                    <button onclick="window.location.href='#contact'"
                         class="bg-transparent border-2 border-maroon hover:bg-white hover:text-maroon hover:border-white text-white px-8 py-3 rounded-full font-bold transition transform hover:scale-105">
                         Contact Us
                     </button>
@@ -61,17 +60,67 @@
             </div>
 
 
-            <div class="relative hidden lg:block">
-                <div class="relative w-full h-96">
-                    <div
-                        class="absolute top-0 left-0 w-full h-full bg-[url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80')] bg-cover bg-center rounded-2xl shadow-2xl transform rotate-3 hover:rotate-0 transition duration-500">
-                    </div>
-                    <div
-                        class="absolute top-8 left-8 w-full h-full bg-[url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80')] bg-cover bg-center rounded-2xl shadow-2xl transform -rotate-3 hover:rotate-0 transition duration-500">
-                    </div>
-                </div>
-            </div>
-        </div>
+<div class="relative hidden lg:block group" id="hero-animated-images">
+  <div class="relative w-full h-[28rem] perspective-1000">
+
+    <!-- Layer 1 -->
+    <div id="image-layer-1"
+      class="absolute top-0 left-0 w-full h-full bg-[url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80')] 
+      bg-cover bg-center rounded-3xl shadow-2xl
+      ring-2 ring-maroon/40
+      transition-transform duration-700 ease-out 
+      backdrop-blur-sm saturate-150 z-20">
+    </div>
+
+    <!-- Layer 2 -->
+    <div id="image-layer-2"
+      class="absolute top-12 left-12 w-full h-full bg-[url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80')] 
+      bg-cover bg-center rounded-3xl shadow-2xl
+      ring-2 ring-maroon/40
+      transition-transform duration-700 ease-out delay-100
+      backdrop-blur-sm saturate-150 z-10">
+    </div>
+
+    <!-- Animated Glow Behind -->
+    <div class="absolute -inset-2 rounded-3xl bg-maroon/20 blur-3xl animate-pulse z-0"></div>
+  </div>
+</div>
+
+<script>
+  const layer1 = document.getElementById('image-layer-1');
+  const layer2 = document.getElementById('image-layer-2');
+  let floatOffset = 0;
+  let direction = 1;
+
+  function animateFloat() {
+    floatOffset += 0.2 * direction;
+    if (floatOffset > 10 || floatOffset < -10) direction *= -1;
+
+    layer1.style.transform = `translateY(${floatOffset}px) rotate(4deg)`;
+    layer2.style.transform = `translateY(${-floatOffset}px) rotate(-4deg)`;
+
+    requestAnimationFrame(animateFloat);
+  }
+  animateFloat();
+
+  // Optional: Parallax tilt on mouse move
+  const container = document.getElementById('hero-animated-images');
+  container.addEventListener('mousemove', (e) => {
+    const rect = container.getBoundingClientRect();
+    const x = (e.clientX - rect.left - rect.width / 2) / 40;
+    const y = (e.clientY - rect.top - rect.height / 2) / 40;
+
+    layer1.style.transform += ` rotateX(${y}deg) rotateY(${x}deg)`;
+    layer2.style.transform += ` rotateX(${y / 2}deg) rotateY(${x / 2}deg)`;
+  });
+
+  container.addEventListener('mouseleave', () => {
+    layer1.style.transform = `translateY(${floatOffset}px) rotate(4deg)`;
+    layer2.style.transform = `translateY(${-floatOffset}px) rotate(-4deg)`;
+  });
+</script>
+
+</div>
     </div>
 
     <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce z-10">
@@ -94,7 +143,7 @@
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
                 <!-- Text -->
                 <div class="space-y-6 relative z-10">
-                    <p class="text-lg md:text-xl italic text-gray-300 font-saint">
+                    <p class="text-lg md:text-xl font-bold text-gray-300 uppercase">
                         Get a chance to study in the best globally accredited institutions.
                     </p>
                     <p class="text-gray-400 leading-relaxed">
@@ -104,8 +153,7 @@
                         success
                         abroad.
                     </p>
-                    <button
-                        class="relative inline-flex items-center justify-center px-8 py-3 bg-gradient-to-r from-maroon to-red-900 rounded-full text-white font-semibold shadow-lg hover:scale-105 transition-transform duration-300">
+                    <button class="relative inline-flex items-center justify-center px-8 py-3 bg-gradient-to-r from-maroon to-red-900 rounded-full text-white font-semibold shadow-lg hover:scale-105 transition-transform duration-300" onclick="location.href='{% url 'company_profile' %}'">
                         <span>Read More</span>
                         <i class="fas fa-arrow-right ml-3 animate-pulse"></i>
                     </button>
@@ -329,6 +377,8 @@
             <div class="bg-black/50 backdrop-blur-lg p-10 rounded-2xl border border-white/10 shadow-xl">
                 <h2
                     class="text-4xl md:text-5xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-white to-maroon uppercase ">
+          <i class="fas fa-bullseye text-maroon mr-3"></i>
+
                     Our Mission
                 </h2>
                 <p class="text-gray-300 text-lg leading-relaxed mb-8">

@@ -123,14 +123,6 @@ def resend_activation_email(request):
 
     sent_time = datetime.fromisoformat(sent_time)
 
-    # Ensure both datetimes are timezone-aware
-    # if sent_time.tzinfo is None:
-    #     sent_time = sent_time.replace(tzinfo=now().tzinfo)
-
-    # if (now() - sent_time).total_seconds() < 90:
-    #     messages.warning(request, "Please wait before requesting a new email.")
-    #     return redirect('activation_sent')
-
     user = User.objects.filter(email=email, is_active=False).first()
     if user:
         current_site = get_current_site(request)
@@ -201,3 +193,11 @@ def profile(request):
         'form': form,
     })
 
+
+def company_profile(request):
+
+    context = {
+        'gallery_items': GalleryItem.objects.order_by('-created_at')[:10],
+        'universities': University.objects.order_by('-deadline')[:10], 
+    }
+    return render(request, 'yuzzaz/company_profile.html', context)

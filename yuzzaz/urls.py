@@ -19,4 +19,5 @@ urlpatterns = [
 
     path('activation-sent/', views.activation_sent, name='activation_sent'),
     path('resend-activation/', views.resend_activation_email, name='resend_activation_email'),
+    path('company-profile/', views.company_profile, name='company_profile'),
 ]
