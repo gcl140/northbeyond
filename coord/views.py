@@ -75,6 +75,7 @@ def event_detail(request, pk):
     }
     return render(request, 'coord/event_detail.html', context)
 
+@login_required
 @staff_member_required
 def event_add(request):
     if request.method == 'POST':
@@ -87,6 +88,7 @@ def event_add(request):
     return render(request, 'coord/event_add.html', {'form': form, 'title': 'Create New'})
 
 
+@login_required
 @staff_member_required
 def edit_event(request, pk):
     event = get_object_or_404(UpcomingEvent, pk=pk)
@@ -101,6 +103,7 @@ def edit_event(request, pk):
     return render(request, 'coord/event_add.html', {'form': form, 'event': event, 'title': 'Edit'})
 
 
+@login_required
 @staff_member_required
 def delete_event(request, pk):
     event = get_object_or_404(UpcomingEvent, pk=pk)
@@ -109,6 +112,7 @@ def delete_event(request, pk):
     return redirect('all_events')  # or 'landing' depending on your structure
 
 
+@login_required
 @staff_member_required
 def gallery_add(request):
     if request.method == 'POST':
@@ -121,6 +125,7 @@ def gallery_add(request):
         form = GalleryItemForm()
     return render(request, 'coord/gallery_add.html', {'form': form, 'title': 'Add'})
 
+@login_required
 @staff_member_required
 def gallery_edit(request, pk):
     item = get_object_or_404(GalleryItem, pk=pk)
@@ -134,6 +139,7 @@ def gallery_edit(request, pk):
         form = GalleryItemForm(instance=item)
     return render(request, 'coord/gallery_add.html', {'form': form, 'title': 'Edit', 'item': item})
 
+@login_required
 @staff_member_required
 def gallery_delete(request, pk):
     item = get_object_or_404(GalleryItem, pk=pk)
@@ -151,6 +157,7 @@ def universities_all(request):
     universities = University.objects.order_by('deadline')
     return render(request, 'coord/universities.html', {'universities': universities})
 
+@login_required
 @staff_member_required
 def university_add(request):
     if request.method == 'POST':
@@ -163,6 +170,7 @@ def university_add(request):
         form = UniversityForm()
     return render(request, 'coord/university_add.html', {'form': form, 'title': 'Add'})
 
+@login_required
 @staff_member_required
 def university_edit(request, pk):
     university = get_object_or_404(University, pk=pk)
@@ -176,6 +184,7 @@ def university_edit(request, pk):
         form = UniversityForm(instance=university)
     return render(request, 'coord/university_add.html', {'form': form, 'title': 'Edit', 'university': university})
 
+@login_required
 @staff_member_required
 def university_delete(request, pk):
     university = get_object_or_404(University, pk=pk)
@@ -187,6 +196,7 @@ def team_all(request):
     team_members = TeamMember.objects.all().order_by('rank')
     return render(request, 'coord/team.html', {'team_members': team_members})
 
+@login_required
 @staff_member_required
 def team_add(request):
     if request.method == 'POST':
@@ -199,6 +209,7 @@ def team_add(request):
         form = TeamMemberForm()
     return render(request, 'coord/team_add.html', {'form': form, 'title': 'Add'})
 
+@login_required
 @staff_member_required
 def team_edit(request, pk):
     member = get_object_or_404(TeamMember, pk=pk)
@@ -212,6 +223,7 @@ def team_edit(request, pk):
         form = TeamMemberForm(instance=member)
     return render(request, 'coord/team_add.html', {'form': form, 'title': 'Edit', 'member': member})
 
+@login_required
 @staff_member_required
 def team_delete(request, pk):
     member = get_object_or_404(TeamMember, pk=pk)
@@ -219,10 +231,12 @@ def team_delete(request, pk):
     messages.success(request, "Team member removed.")
     return redirect('all_team')
 
+@login_required
 @staff_member_required
 def staff_dashboard(request):
     return render(request, 'coord/actions.html', {'title': 'Staff Dashboard'})
 
+@login_required
 @staff_member_required
 def subscribers(request):
     query = request.GET.get('q', '')
@@ -238,6 +252,7 @@ def subscribers(request):
     }
     return render(request, 'coord/email_all_subscribers.html', context)
 
+@login_required
 @staff_member_required
 def subscriber_delete(request, pk):
     user = get_object_or_404(SubscriptionUser, pk=pk)
@@ -247,6 +262,7 @@ def subscriber_delete(request, pk):
 
 
 
+@login_required
 @staff_member_required
 def send_bulk_email(request):
     if request.method == "POST":
@@ -282,6 +298,7 @@ def send_bulk_email(request):
 
 
 # List email templates
+@login_required
 @staff_member_required
 def email_template_list(request):
     templates = SubscriptionEmailTemplate.objects.all()
@@ -289,6 +306,7 @@ def email_template_list(request):
 
 
 # Edit an existing template
+@login_required
 @staff_member_required
 def email_template_edit(request, template_id):
     template = get_object_or_404(SubscriptionEmailTemplate, id=template_id)
@@ -303,6 +321,7 @@ def email_template_edit(request, template_id):
         form = EmailTemplateForm(instance=template)
     return render(request, 'coord/email_template_form.html', {'form': form})
 
+@login_required
 @staff_member_required
 def email_template_create(request):
     if request.method == "POST":
@@ -316,6 +335,7 @@ def email_template_create(request):
 
     return render(request, 'coord/email_template_form.html', {'form': form})
 
+@login_required
 @staff_member_required
 def delete_template(request, template_id):
     template = get_object_or_404(SubscriptionEmailTemplate, id=template_id)
@@ -323,6 +343,7 @@ def delete_template(request, template_id):
     messages.success(request, "Email template deleted successfully.")
     return redirect("email_template_list")
 
+@login_required
 @staff_member_required
 def send_specific_bulk_email(request, template_id):
     template = get_object_or_404(SubscriptionEmailTemplate, id=template_id)
@@ -352,16 +373,19 @@ def send_specific_bulk_email(request, template_id):
     return redirect('email_template_list')
 
 
+@login_required
 @staff_member_required
 def message_list(request):
     messages_qs = Message.objects.all().order_by('-joined_at')  # adjust field if needed
     return render(request, 'coord/message_list.html', {'mesejes': messages_qs})
 
+@login_required
 @staff_member_required
 def message_detail(request, pk):
     message = get_object_or_404(Message, pk=pk)
     return render(request, 'coord/message_detail.html', {'meseje': message})
 
+@login_required
 @staff_member_required
 def reply_to_message(request, pk):
     msg = get_object_or_404(Message, pk=pk)
@@ -394,11 +418,13 @@ def reply_to_message(request, pk):
 
     return render(request, 'coord/message_reply_form.html', {'form': form, 'message': msg})
 
+@login_required
 @staff_member_required
 def program_list(request):
     programs = Program.objects.all().order_by('name')
     return render(request, 'coord/programs_list.html', {'programs': programs})
 
+@login_required
 @staff_member_required
 def program_create(request):
     if request.method == "POST":
@@ -411,6 +437,7 @@ def program_create(request):
         form = ProgramForm()
     return render(request, 'coord/programs_add.html', {'form': form, 'title': 'Add Program'})
 
+@login_required
 @staff_member_required
 def program_edit(request, pk):
     program = get_object_or_404(Program, pk=pk)
@@ -424,6 +451,7 @@ def program_edit(request, pk):
         form = ProgramForm(instance=program)
     return render(request, 'coord/programs_add.html', {'form': form, 'title': 'Edit Program'})
 
+@login_required
 @staff_member_required
 def program_delete(request, pk):
     program = get_object_or_404(Program, pk=pk)
@@ -431,6 +459,7 @@ def program_delete(request, pk):
     messages.success(request, "Program deleted successfully.")
     return redirect('program_list')
 
+@login_required
 @staff_member_required
 def program_detail(request, pk):
     program = get_object_or_404(Program, pk=pk)
@@ -467,11 +496,13 @@ def apply_for_job(request):
 def job_apply_success(request):
     return render(request, "coord/job_success.html")
 
+@login_required
 @staff_member_required
 def my_applications(request):
     apps = JobApplication.objects.filter(user=request.user, submitted=True).order_by('-applied_on')
     return render(request, "coord/job_apps.html", {"applications": apps})
 
+@login_required
 @staff_member_required
 def delete_application(request, pk):
     app = get_object_or_404(JobApplication, pk=pk, user=request.user)

@@ -27,5 +27,13 @@ urlpatterns = [
     path('actions/', include('coord.urls')),
     path("__reload__/", include("django_browser_reload.urls")),
     path('accounts/login/', RedirectView.as_view(url='/login/', permanent=True)),
-    
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+if not settings.DEBUG:
+    urlpatterns += [
+        path('media/<path:path>/', serve, {'document_root': settings.MEDIA_ROOT}),
+    ]
+else:
+    # Serve media files in development (only works if DEBUG = True)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
