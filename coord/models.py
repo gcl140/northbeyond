@@ -17,11 +17,12 @@ class Program(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField()
     branch = models.CharField(max_length=255, choices=[
+        ('All Branches', 'All Branches'),
         ('Golden Tulip, DSM', 'Golden Tulip, DSM'),
-        ('Sea Shells, DSM', 'Sea Shells, DSM'),
+        ('Seychelles', 'Seychelles'),
         ('Arusha, DSM', 'Arusha, DSM')
-    ])
-    duration = models.CharField(max_length=100)
+    ], default='All Branches' )
+    duration = models.CharField(max_length=100, null= True, blank=True )
     # type = models.CharField(max_length=50, choices=[
     #     ('Short Course', 'Short Course'),
     #     ('Diploma', 'Diploma'),

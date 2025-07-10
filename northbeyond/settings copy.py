@@ -26,8 +26,8 @@ SECRET_KEY = 'django-insecure-ahl9!53vz5ve=v5bdt-=p)##n6q41%+3@e0_at^!g5)4uqq$e=
 DEBUG = True
 # DEBUG = False
 
-# ALLOWED_HOSTS = []
-ALLOWED_HOSTS = ['gcl.pythonanywhere.com']
+ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = ['gcl.pythonanywhere.com']
 
 
 # Application definition
@@ -138,17 +138,16 @@ EMAIL_HOST_PASSWORD = 'lwuhmvurprfjbdso'
 
 
 # In settings.py
-
-# LOGIN_URL = '/login/'
-# LOGIN_REDIRECT_URL = '/dashboard/'  # or any default route after login
-LOGIN_REDIRECT_URL = 'dashboard'
-
+LOGOUT_REDIRECT_URL = 'login'
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'staff_dashboard'  # or any default route after login
 
 import os
 
-MEDIA_URL = '/media/'
+MEDIA_URL = '/media/' 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+

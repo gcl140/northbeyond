@@ -1,10 +1,11 @@
 {% extends "yuzzaz/besi.html" %}
 {% load static %}
+{% block title %} Company Profile{% endblock %}
 {% block content %}
 
 <!-- Hero Section -->
 <section class="relative bg-gradient-to-b from-black to-gray-900 h-96 flex items-center">
-  <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80')] bg-cover bg-center opacity-30"></div>
+  <div class="absolute inset-0 bg-[url('{% static 'images/blacks success.jpg' %}')] bg-cover bg-center opacity-30"></div>
   <div class="container mx-auto px-4 z-10 text-center">
     <h1 class="text-5xl font-bold text-white mb-4 uppercase">North & Beyond Heights</h1>
     <p class="text-xl text-red-400 font-saint">Go beyond the Norm!</p>
@@ -16,10 +17,10 @@
   <div class="container mx-auto px-4 lg:px-8">
     <div class="flex flex-col lg:flex-row items-center gap-12">
       <div class="lg:w-1/2">
-        <img src="https://static.wixstatic.com/media/11062b_5bf144f8ae764a70ad76808589f02c12~mv2_d_6000_4000_s_4_2.jpg/v1/fill/w_669,h_882,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/11062b_5bf144f8ae764a70ad76808589f02c12~mv2_d_6000_4000_s_4_2.jpg" alt="Diverse Students" class="rounded-xl shadow-2xl border-2 border-maroon/50">
+        <img src="{% static 'images/blacks.jpg' %}" alt="Diverse Students" class="rounded-xl shadow-2xl border-2 border-maroon/50">
       </div>
       <div class="lg:w-1/2">
-        <h2 class="text-3xl font-bold text-white mb-6 flex items-center">
+        <h2 class="text-4xl font-bold text-white mb-6 flex items-center">
           <i class="fas fa-university mr-3 text-maroon"></i>
           WHO ARE WE?
         </h2>
@@ -41,7 +42,7 @@
 <section class="relative py-28 bg-black text-white">
     <!-- Background Image -->
     <div class="absolute inset-0 z-0">
-        <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?ixlib=rb-1.2.1&auto=format&fit=crop&w=1600&q=80"
+        <img src="{% static 'images/black grad.jpg' %}"
             alt="Global education" class="w-full h-full object-cover object-center brightness-50">
     </div>
 
@@ -73,7 +74,7 @@
                 <div class="relative group max-w-lg w-full">
                     <div
                         class="rounded-2xl overflow-hidden shadow-2xl transition transform group-hover:scale-105 duration-700">
-                        <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+                        <img src="{% static 'images/black grad.jpg' %}"
                             alt="Global education" class="w-full h-auto object-cover">
                     </div>
                     <div
@@ -92,7 +93,7 @@
 <!-- Partners Section -->
 <section class="py-16 bg-gray-900">
   <div class="container mx-auto px-4 lg:px-8">
-    <h2 class="text-3xl font-bold text-white mb-12 text-center">
+    <h2 class="text-4xl font-bold text-white mb-12 text-center">
       <i class="fas fa-handshake text-maroon mr-3"></i>
       OUR PARTNERS
     </h2>
@@ -149,11 +150,11 @@
   </div>
 </section>
 
-<hr class="border-t border-gray-800/80">
+<!-- <hr class="border-t border-gray-900/10"> -->
 
-<section class="py-16 bg-gray-900">
+<section class="py-12 bg-gray-900">
   <div class="container mx-auto px-4 lg:px-8">
-    <h2 class="text-3xl font-bold text-white mb-12 text-center">
+    <h2 class="text-4xl font-bold text-white mb-12 text-center">
       <i class="fas fa-images text-maroon mr-3"></i>
       GALLERY
     </h2>

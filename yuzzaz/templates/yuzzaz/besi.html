@@ -5,12 +5,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>North & Beyond | Study Abroad</title>
+    <title>
+        {% block title %} North & Beyond | Study Abroad{% endblock %}
+    </title>
     <link rel="shortcut icon" href="../../../static/images/NB ENDITA RED (1).png" type="image/x-icon">
     <!-- <link rel="shortcut icon" href="https://static.wixstatic.com/media/3dc1db_fe21d4e499dc4b46a771b19bcee36940~mv2.png/v1/fill/w_124,h_124,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/Artboard-1-copy-21.png" type="image/x-icon"> -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Sen:wght@400..800&display=swap" rel="stylesheet">    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sen:wght@400..800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/scrollreveal"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -116,7 +119,7 @@
             <div class="hidden md:flex items-center space-x-6 text-white text-sm font-medium">
                 <a href="{% url 'landing' %}#"
                     class="hover:text-gray-400 transition duration-200 pr-4 border-r border-gray-700">Home</a>
-                <a href="{% url 'landing' %}#profile"
+                <a href="{% url 'company_profile' %}"
                     class="hover:text-gray-400 transition duration-200 pr-4 border-r border-gray-700">Profile</a>
                 <a href="{% url 'landing' %}#services"
                     class="hover:text-gray-400 transition duration-200 pr-4 border-r border-gray-700">Services</a>
@@ -131,7 +134,7 @@
                     </button>
 
                     <div x-show="open" @click.away="open = false"
-                        class="absolute right-0 mt-2 w-48 bg-gray-300 rounded-md shadow-lg py-1 z-50 border border-gray-200"
+                        class="absolute right-0 mt-2 w-48 bg-gray-900 rounded-md shadow-lg py-1 z-50 border border-gray-800"
                         x-transition:enter="transition ease-out duration-100"
                         x-transition:enter-start="transform opacity-0 scale-95"
                         x-transition:enter-end="transform opacity-100 scale-100"
@@ -139,23 +142,24 @@
                         x-transition:leave-start="transform opacity-100 scale-100"
                         x-transition:leave-end="transform opacity-0 scale-95">
                         <a href="{% url 'profile' %}"
-                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Your Profile</a>
+                            class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-100">Your Profile</a>
                         {% if user.is_staff %}
                         <a href="{% url 'staff_dashboard' %}"
-                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Actions</a>
+                            class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-100">Actions</a>
                         {% endif %}
                         <a href="mailto:gftinity01@gmail.com"
-                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Help
+                            class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-100">Help
                             Center</a>
-                        <div class="border-t border-gray-200"></div>
+                        <div class="border-t border-gray-500/10"></div>
                         <a href="{% url 'logout' %}"
-                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-red-400">Sign
+                            class="block px-4 py-2 text-sm text-gray-500 hover:bg-gray-100 hover:text-red-400">Sign
                             out</a>
                     </div>
                 </div>
                 {% else %}
                 <a href="{% url 'login' %}"
-                    class="hover:text-gray-400 text-red-400transition duration-200 pl-4 border-l border-gray-700">Join Us</a>
+                    class="hover:text-gray-400 text-red-400transition duration-200 pl-4 border-l border-gray-700">Join
+                    Us</a>
                 {% endif %}
             </div>
 
@@ -169,7 +173,7 @@
         <div id="mobile-menu" class="hidden md:hidden bg-dark bg-opacity-95 absolute w-full left-0 px-4 pb-4 shadow-lg">
             <div class="flex flex-col space-y-4">
                 <a href="{% url 'landing' %}" class="text-white py-2 border-b border-gray-700">Home</a>
-                <a href="{% url 'landing' %}#profile" class="text-white py-2 border-b border-gray-700">Profile</a>
+                <a href="{% url 'company_profile' %}" class="text-white py-2 border-b border-gray-700">Profile</a>
                 <a href="{% url 'landing' %}#services" class="text-white py-2 border-b border-gray-700">Services</a>
                 <a href="{% url 'landing' %}#contact" class="text-white py-2 border-b border-gray-700">Contact</a>
                 {% if not user.is_authenticated %}
@@ -202,152 +206,6 @@
                 </h2>
 
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                    <!-- Locations Column -->
-                    <div class="bg-dark border-2 border-gray-900 p-8 rounded-lg">
-                        <div class="flex items-center mb-6">
-                            <div class="bg-maroon p-2 rounded-full mr-4 flex items-center justify-center w-10 h-10">
-                                <i class="fas fa-map-marker-alt text-white text-lg"></i>
-                            </div>
-
-                            <h3 class="text-xl font-bold">
-                                <span class="underline underline-offset-8 decoration-maroon">OUR LOCATIONS</span>
-
-                            </h3>
-                        </div>
-
-                        <div class="space-y-6 text-sm text-gray-300">
-                            <!-- Dar es Salaam Office -->
-                            <div>
-                                <h4 class="font-bold text-lg text-white mb-1">Dar es Salaam Office</h4>
-                                <p class="mb-2">
-                                    <i class="fa fa-chevron-right text-red-400 text-xs opacity-30 mr-2"></i>
-
-                                    Toure Drive, Inside Golden Tulip Hotel<br>Oysterbay, Dar es Salaam, Tanzania
-                                </p>
-                                <a href="https://www.google.com/maps/place/Golden+Tulip+Dar+es+Salaam" target="_blank"
-                                    class="text-white hover:text-red-400 hover:underline flex items-center">
-                                    <i class="fas fa-map-marker-alt mr-2"></i> View on Map
-                                </a>
-                            </div>
-
-                            <!-- Sea Cliff Office -->
-                            <div>
-                                <h4 class="font-bold text-lg text-white mb-1">Sea Cliff Office</h4>
-                                <p class="mb-2">
-                                    <i class="fa fa-chevron-right text-red-400 text-xs opacity-30 mr-2"></i>
-
-                                    Sea Cliff Hotel, Toure Dr<br>Dar es Salaam, Tanzania
-                                </p>
-                                <a href="https://www.google.com/maps/place/Sea+Cliff+Hotel" target="_blank"
-                                    class="text-white hover:text-red-400 hover:underline flex items-center">
-                                    <i class="fas fa-map-marker-alt mr-2"></i> View on Map
-                                </a>
-                            </div>
-
-                            <!-- Arusha Office -->
-                            <div>
-                                <h4 class="font-bold text-lg text-white mb-1">Arusha Office</h4>
-                                <p class="mb-2">
-                                    <i class="fa fa-chevron-right text-red-400 text-xs opacity-30 mr-2"></i>
-
-                                    Denso Building, Kipanga St<br>Arusha 23103, Tanzania
-                                </p>
-                                <a href="https://www.google.com/maps/place/Denso+Building+Arusha" target="_blank"
-                                    class="text-white hover:text-red-400 hover:underline flex items-center">
-                                    <i class="fas fa-map-marker-alt mr-2"></i> View on Map
-                                </a>
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <!-- Contact Info Column -->
-                    <div class="bg-dark border-2 border-gray-900 p-8 rounded-lg">
-                        <div class="flex items-center mb-6">
-                            <div class="bg-maroon p-2 rounded-full mr-4 flex items-center justify-center w-10 h-10">
-                                <i class="fas fa-phone-alt text-white text-lg"></i>
-                            </div>
-
-                            <h3 class="text-xl font-bold">CONTACT INFO</h3>
-                        </div>
-
-                        <div class="space-y-6 text-sm text-gray-300">
-                            <!-- Phone -->
-                            <div>
-                                <h4 class="font-bold text-lg text-white mb-2 flex items-center">
-                                    <i class="fas fa-phone mr-3 text-maroon"></i>
-                                    <span class="underline underline-offset-8 decoration-maroon">Phone</span>
-                                </h4>
-
-                                <div class="space-y-1">
-                                    <a href="tel:+255742203202" class="hover:text-white block">
-                                        <i class="fa fa-chevron-right text-red-400 text-xs opacity-30 mr-2"></i> +255
-                                        742 203 202</a>
-                                    <a href="tel:+255757553552" class="hover:text-white block">
-                                        <i class="fa fa-chevron-right text-red-400 text-xs opacity-30 mr-2"></i>
-                                        +255 757 553 552</a>
-                                </div>
-                            </div>
-
-                            <!-- Email -->
-                            <div>
-                                <h4 class="font-bold text-lg text-white mb-2 flex items-center">
-                                    <i class="fas fa-envelope mr-3 text-maroon"></i>
-                                    <span class="underline underline-offset-8 decoration-maroon">Email</span>
-                                </h4>
-                                <div class="space-y-1">
-                                    <a href="mailto:info@northbeyond.com" class="hover:text-white block">
-                                        <i class="fa fa-chevron-right text-red-400 text-xs opacity-30 mr-2"></i>
-                                        info@northbeyond.com</a>
-                                    <a href="mailto:counselor@northbeyond.com" class="hover:text-white block">
-                                        <i class="fa fa-chevron-right text-red-400 text-xs opacity-30 mr-2"></i>
-                                        counselor@northbeyond.com</a>
-                                </div>
-                            </div>
-
-
-                            <!-- Social Media -->
-                            <div>
-                                <h4 class="font-bold text-lg text-white mb-3 flex items-center">
-                                    <i class="fas fa-share-alt mr-3 text-maroon"></i>
-                                    <span class="underline underline-offset-8 decoration-maroon">Social Media</span>
-                                </h4>
-                                <div class="space-y-3">
-                                    <a href="#" class="flex items-center hover:text-white">
-                                        <div
-                                            class="bg-maroon w-8 h-8 rounded-full flex items-center justify-center mr-3">
-                                            <i class="fab fa-instagram text-white"></i>
-                                        </div>
-                                        north.and.beyond
-                                    </a>
-                                    <a href="#" class="flex items-center hover:text-white">
-                                        <div
-                                            class="bg-maroon w-8 h-8 rounded-full flex items-center justify-center mr-3">
-                                            <i class="fab fa-facebook-f text-white"></i>
-                                        </div>
-                                        northandbeyond
-                                    </a>
-                                    <a href="#" class="flex items-center hover:text-white">
-                                        <div
-                                            class="bg-maroon w-8 h-8 rounded-full flex items-center justify-center mr-3">
-                                            <i class="fab fa-twitter text-white"></i>
-                                        </div>
-                                        northandbeyond
-                                    </a>
-                                    <a href="#" class="flex items-center hover:text-white">
-                                        <div
-                                            class="bg-maroon w-8 h-8 rounded-full flex items-center justify-center mr-3">
-                                            <i class="fab fa-tiktok text-white"></i>
-                                        </div>
-                                        northandbeyond
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <!-- Contact Form Column -->
                     <div class="bg-dark border-2 border-gray-900 p-8 rounded-lg">
                         <div class="flex items-center mb-6">
                             <div class="bg-maroon p-2 rounded-full mr-4 flex items-center justify-center w-10 h-10">
@@ -414,6 +272,174 @@
                         </div>
 
                     </div>
+
+
+                    <!-- Contact Info Column -->
+                    <div class="bg-dark border-2 border-gray-900 p-8 rounded-lg">
+                        <div class="flex items-center mb-6">
+                            <div class="bg-maroon p-2 rounded-full mr-4 flex items-center justify-center w-10 h-10">
+                                <i class="fas fa-phone-alt text-white text-lg"></i>
+                            </div>
+
+                            <h3 class="text-xl font-bold">CONTACT INFO</h3>
+                        </div>
+
+                        <div class="space-y-6 text-sm text-gray-300">
+                            <!-- Phone -->
+                            <div>
+                                <h4 class="font-bold text-lg text-white mb-2 flex items-center">
+                                    <i class="fas fa-phone mr-3 text-maroon"></i>
+                                    <span class="underline underline-offset-8 decoration-maroon">Phone</span>
+                                </h4>
+
+                                <div class="space-y-1">
+                                    <a href="tel:+255742203202" class="hover:text-white block">
+                                        <i class="fa fa-chevron-right text-red-400 text-xs opacity-30 mr-2"></i> DSM: +255
+                                        742 203 202 </a>
+                                    <a href="tel:+255757553552" class="hover:text-white block">
+                                        <i class="fa fa-chevron-right text-red-400 text-xs opacity-30 mr-2"></i>
+                                        DSM: +255 757 553 552 </a>
+                                    <a href="tel:+255793553552" class="hover:text-white block">
+                                        <i class="fa fa-chevron-right text-red-400 text-xs opacity-30 mr-2"></i>
+                                        ARUSHA: +255 793 553 552</a>
+                                    <a href="tel:+2482523784" class="hover:text-white block">
+                                        <i class="fa fa-chevron-right text-red-400 text-xs opacity-30 mr-2"></i>
+                                        SEYCHELLES: +248 252 3784</a>
+                                </div>
+                            </div>
+
+                            <!-- Email -->
+                            <div>
+                                <h4 class="font-bold text-lg text-white mb-2 flex items-center">
+                                    <i class="fas fa-envelope mr-3 text-maroon"></i>
+                                    <span class="underline underline-offset-8 decoration-maroon">Email</span>
+                                </h4>
+                                <div class="space-y-1">
+                                    <a href="mailto:info@northbeyond.com" class="hover:text-white block">
+                                        <i class="fa fa-chevron-right text-red-400 text-xs opacity-30 mr-2"></i>
+                                        info@northbeyond.com</a>
+                                    <a href="mailto:counselor@northbeyond.com" class="hover:text-white block">
+                                        <i class="fa fa-chevron-right text-red-400 text-xs opacity-30 mr-2"></i>
+                                        counselor@northbeyond.com</a>
+                                    <a href="mailto:arusha@northbeyond.com" class="hover:text-white block">
+                                        <i class="fa fa-chevron-right text-red-400 text-xs opacity-30 mr-2"></i>
+                                        arusha@northbeyond.com</a>
+                                    <a href="mailto:seychelles@northbeyond.com" class="hover:text-white block">
+                                        <i class="fa fa-chevron-right text-red-400 text-xs opacity-30 mr-2"></i>
+                                        seychelles@northbeyond.com</a>
+                                </div>
+                            </div>
+
+
+                            <!-- Social Media -->
+                            <div>
+                                <h4 class="font-bold text-lg text-white mb-3 flex items-center">
+                                    <i class="fas fa-share-alt mr-3 text-maroon"></i>
+                                    <span class="underline underline-offset-8 decoration-maroon">Social Media</span>
+                                </h4>
+                                <div class="space-y-3">
+                                    <a href="https://www.instagram.com/north.and.beyond/" target="_blank"
+                                        class="flex items-center hover:text-white">
+                                        <div
+                                            class="bg-maroon w-8 h-8 rounded-full flex items-center justify-center mr-3">
+                                            <i class="fab fa-instagram text-white"></i>
+                                        </div>
+                                        north.and.beyond
+                                    </a>
+                                    <a href="http://wa.me/255742203202" class="flex items-center hover:text-white" target="_blank">
+                                        <div
+                                            class="bg-maroon w-8 h-8 rounded-full flex items-center justify-center mr-3">
+                                            <i class="fab fa-whatsapp text-white"></i>
+                                        </div>
+                                        northandbeyond
+                                    </a>
+                                    <a href="https://x.com/_northandbeyond?t=JT08J6NQ7XYkzk3GzFVs7g&s=08" class="flex items-center hover:text-white">
+                                        <div
+                                            class="bg-maroon w-8 h-8 rounded-full flex items-center justify-center mr-3" target="_blank">
+                                            <i class="fab fa-twitter text-white"></i>
+                                        </div>
+                                        _northandbeyond
+                                    </a>
+                                    <a href="https://www.tiktok.com/@north.and.beyond" target="_blank"
+                                        class="flex items-center hover:text-white">
+                                        <div
+                                            class="bg-maroon w-8 h-8 rounded-full flex items-center justify-center mr-3">
+                                            <i class="fab fa-tiktok text-white"></i>
+                                        </div>
+                                        north.and.beyond
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- Locations Column -->
+                    <div class="bg-dark border-2 border-gray-900 p-8 rounded-lg">
+                        <div class="flex items-center mb-6">
+                            <div class="bg-maroon p-2 rounded-full mr-4 flex items-center justify-center w-10 h-10">
+                                <i class="fas fa-map-marker-alt text-white text-lg"></i>
+                            </div>
+
+                            <h3 class="text-xl font-bold">
+                                <span class="underline underline-offset-8 decoration-maroon">OUR LOCATIONS</span>
+
+                            </h3>
+                        </div>
+
+                        <div class="space-y-6 text-sm text-gray-300">
+                            <!-- Dar es Salaam Office -->
+                            <div>
+                                <h4 class="font-bold text-lg text-white mb-1">Dar es Salaam Office</h4>
+                                <p class="mb-2">
+                                    <i class="fa fa-chevron-right text-red-400 text-xs opacity-30 mr-2"></i>
+
+                                    Toure Drive, Inside Golden Tulip Hotel<br>Oysterbay, Dar es Salaam, Tanzania
+                                </p>
+                                
+                                <div class="w-[300px] h-[170px] rounded-xl overflow-hidden border-2 border-maroon shadow-lg mt-4">
+                                    <iframe
+                                      src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3962.109845406887!2d39.2821424!3d-6.7564574!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x185c4d028e18fabb%3A0xb5777b88fcd2168a!2sGolden%20Tulip%20Dar%20Es%20Salaam!5e0!3m2!1sen!2stz!4v1752137935100!5m2!1sen!2stz"
+                                      class="w-full h-full font-karla"
+                                      style="border:0;"
+                                      allowfullscreen=""
+                                      loading="lazy"
+                                      referrerpolicy="no-referrer-when-downgrade">
+                                    </iframe>
+                                  </div>
+                                  
+                            </div>
+
+                            <!-- Sea Cliff Office -->
+                            <div>
+                                <h4 class="font-bold text-lg text-white mb-1">Seychelles Office</h4>
+                                <p class="mb-2">
+                                    <i class="fa fa-chevron-right text-red-400 text-xs opacity-30 mr-2"></i>
+
+                                    Seychelles<br>Seychelles
+                                </p>
+                                <a href="https://maps.app.goo.gl/Qvx2JTyho1aLjueN8" target="_blank"
+                                    class="text-red-300 hover:text-red-400 hover:underline flex items-center">
+                                    <i class="fas fa-map-marker-alt mr-2"></i> View on Map
+                                </a>
+                            </div>
+
+                            <!-- Arusha Office -->
+                            <div>
+                                <h4 class="font-bold text-lg text-white mb-1">Arusha Office</h4>
+                                <p class="mb-2">
+                                    <i class="fa fa-chevron-right text-red-400 text-xs opacity-30 mr-2"></i>
+
+                                    Denso Building, Kipanga St<br>Arusha 23103, Tanzania
+                                </p>
+                                <a href="https://maps.app.goo.gl/Nk9emjx3MUgiewVcA" target="_blank"
+                                    class="text-red-300 hover:text-red-400 hover:underline flex items-center">
+                                    <i class="fas fa-map-marker-alt mr-2"></i> View on Map
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </section>
@@ -718,8 +744,6 @@
         });
     </script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-</body>
-
 </body>
 
 </html>
