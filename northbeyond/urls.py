@@ -37,3 +37,6 @@ if not settings.DEBUG:
 else:
     # Serve media files in development (only works if DEBUG = True)
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+
+# npx tailwindcss -c ./tailwind.config.js -i ./static/css/input.css -o ./static/css/output.css --minify
